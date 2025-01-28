@@ -10,5 +10,4 @@ import org.mapstruct.ReportingPolicy;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IUserEntityMapper {
     UserEntity toEntity(User user);
-    User toDomain(UserEntity userEntity);
 }
