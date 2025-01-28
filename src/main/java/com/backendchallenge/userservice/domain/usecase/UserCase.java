@@ -17,7 +17,9 @@ public class UserCase implements IUserServicePort {
     private final IUserPersistencePort userPersistencePort;
     private final IEncoderPersistencePort encoderPersistencePort;
 
-    public UserCase(IRoleServicePort roleServicePort, IUserPersistencePort userPersistencePort, IEncoderPersistencePort encoderPersistencePort) {
+    public UserCase(IRoleServicePort roleServicePort,
+                    IUserPersistencePort userPersistencePort,
+                    IEncoderPersistencePort encoderPersistencePort) {
         this.roleServicePort = roleServicePort;
         this.userPersistencePort = userPersistencePort;
         this.encoderPersistencePort = encoderPersistencePort;
@@ -26,6 +28,7 @@ public class UserCase implements IUserServicePort {
     void saveUserWithRole(User user, Role role) {
         userPersistencePort.saveUserWithRole(user, role);
     }
+
     @Override
     public void createOwner(User user) {
         validateOfUserParams(user);
@@ -35,42 +38,43 @@ public class UserCase implements IUserServicePort {
     }
 
     private static void userOlderThatValidAge(LocalDate birthdate) {
-        if(birthdate.isAfter(LocalDate.now().minusYears(ConstValidation.MIN_AGE))){
+        if (birthdate.isAfter(LocalDate.now().minusYears(ConstValidation.MIN_AGE))) {
             throw new UserOlderThatTheValidAgeException();
         }
     }
+
     private static void emailFormatValidation(String email) {
-        if(email.matches(ConstValidation.EMAIL_REGEX)){
-            throw new InvalidUserEmailException();
+        if (email.matches(ConstValidation.EMAIL_REGEX)) {
+            throw new InvalidUserEmailFormatException();
         }
     }
 
     private static void documentFormatValidation(String document) {
-        if(document.matches(ConstValidation.DOCUMENT_REGEX)){
+        if (document.matches(ConstValidation.DOCUMENT_REGEX)) {
             throw new InvalidUserDocumentFormatException();
         }
     }
 
     private static void phoneFormatValidation(String phone) {
-        if(phone.matches(ConstValidation.PHONE_REGEX)){
+        if (phone.matches(ConstValidation.PHONE_REGEX)) {
             throw new InvalidUserPhoneFormatException();
         }
     }
 
     private static void validateOfUserParams(User user) {
-        if(user == null|| user.getName().isBlank()){
+        if (user == null || user.getName().isBlank()) {
             throw new EmptyUserNameException();
         }
         if (user.getLastName() == null || user.getLastName().isBlank()) {
             throw new EmptyUserLastNameException();
         }
-        if (user.getDocument()== null || user.getDocument().isBlank()) {
+        if (user.getDocument() == null || user.getDocument().isBlank()) {
             throw new EmptyUserDocumentException();
         }
-        if(user.getPhone()==null || user.getPhone().isBlank()){
-            throw new EmptyUSerPhoneException();
+        if (user.getPhone() == null || user.getPhone().isBlank()) {
+            throw new EmptyUserPhoneException();
         }
-        if(user.getBirthdate() == null){
+        if (user.getBirthdate() == null) {
             throw new EmptyUserBirthdateException();
         }
         if (user.getEmail() == null || user.getEmail().isBlank()) {
