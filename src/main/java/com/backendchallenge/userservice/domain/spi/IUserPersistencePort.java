@@ -5,4 +5,5 @@ import com.backendchallenge.userservice.domain.model.User;
 
 public interface IUserPersistencePort {
     void saveUserWithRole(User user, Role role);
+    Boolean existsUserWithRole(Long userId, Role role);
 }

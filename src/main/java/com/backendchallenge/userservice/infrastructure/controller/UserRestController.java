@@ -12,10 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,5 +29,10 @@ public class UserRestController {
     public ResponseEntity<String> createOwner(@Valid @RequestBody CreateOwnerRequest createOwnerRequest) {
         userHandler.createOwner(createOwnerRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping(ConstRute.FIND_OWNER_BY_ID_RUTE)
+    public ResponseEntity<Boolean> findOwnerById(@RequestParam Long ownerId) {
+        return ResponseEntity.ok(userHandler.findOwnerById(ownerId));
     }
 }

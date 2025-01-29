@@ -37,6 +37,12 @@ public class UserCase implements IUserServicePort {
         saveUserWithRole(user, role);
     }
 
+    @Override
+    public Boolean findOwnerById(Long ownerId) {
+        Role role = roleServicePort.getRoleByName(ConstRole.OWNER);
+        return userPersistencePort.existsUserWithRole(ownerId, role);
+    }
+
     private static void userOlderThatValidAge(LocalDate birthdate) {
         if (birthdate.isAfter(LocalDate.now().minusYears(ConstValidation.MIN_AGE))) {
             throw new UserOlderThatTheValidAgeException();

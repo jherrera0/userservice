@@ -4,4 +4,5 @@ import com.backendchallenge.userservice.domain.model.User;
 
 public interface IUserServicePort {
     void createOwner(User user);
+    Boolean findOwnerById(Long ownerId);
 }

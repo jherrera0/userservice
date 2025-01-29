@@ -8,6 +8,7 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
+
 public interface ICreateOwnerRequestMapper {
     User toUser(CreateOwnerRequest createOwnerRequest);
 }
