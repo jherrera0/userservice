@@ -24,7 +24,7 @@ class UserTest {
 
     @Test
     void testGettersAndSetters() {
-        user.setId(ConstTest.ROLE_ID_TEST);
+        user.setId(ConstTest.ID_TEST);
         user.setEmail(ConstTest.EMAIL_NEW);
         user.setPassword(ConstTest.PASSWORD_NEW);
         user.setDocument(ConstTest.DOCUMENT_NEW);
@@ -32,7 +32,7 @@ class UserTest {
         user.setBirthdate(ConstTest.BIRTHDATE_NEW);
         user.setName(ConstTest.NAME_NEW);
         user.setLastName(ConstTest.LAST_NAME_NEW);
-        assertEquals(ConstTest.ROLE_ID_TEST, user.getId());
+        assertEquals(ConstTest.ID_TEST, user.getId());
         assertEquals(ConstTest.EMAIL_NEW, user.getEmail());
         assertEquals(ConstTest.PASSWORD_NEW, user.getPassword());
         assertEquals(ConstTest.DOCUMENT_NEW, user.getDocument());

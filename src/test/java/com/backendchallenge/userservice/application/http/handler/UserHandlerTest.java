@@ -14,6 +14,8 @@ import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class UserHandlerTest {
@@ -58,5 +60,25 @@ class UserHandlerTest {
         verify(createOwnerRequestMapper, times(1)).toUser(request);
         verify(userServicePort, times(1)).createOwner(mockedUser);
     }
+    @Test
+    void findOwnerById_ExistingOwnerId_ReturnsTrue() {
+        Long ownerId = ConstTest.ID_TEST;
+        when(userServicePort.findOwnerById(ownerId)).thenReturn(true);
 
+        Boolean result = userHandler.findOwnerById(ownerId);
+
+        assertTrue(result);
+        verify(userServicePort, times(1)).findOwnerById(ownerId);
+    }
+
+    @Test
+    void findOwnerById_NonExistingOwnerId_ReturnsFalse() {
+        Long ownerId = ConstTest.ID_TEST;
+        when(userServicePort.findOwnerById(ownerId)).thenReturn(false);
+
+        Boolean result = userHandler.findOwnerById(ownerId);
+
+        assertFalse(result);
+        verify(userServicePort, times(1)).findOwnerById(ownerId);
+    }
 }

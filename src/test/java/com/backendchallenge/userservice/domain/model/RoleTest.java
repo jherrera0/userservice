@@ -12,7 +12,7 @@ class RoleTest {
     @BeforeEach
     void setUp() {
         role = new Role(
-                ConstTest.ROLE_ID_TEST,
+                ConstTest.ID_TEST,
                 ConstTest.ROLE_NAME_TEST
         );
     }

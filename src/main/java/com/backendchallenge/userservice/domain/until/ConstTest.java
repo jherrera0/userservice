@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class ConstTest {
     public static final String ROLE_NAME_TEST = "RoleTest";
-    public static final Long ROLE_ID_TEST = 1L;
+    public static final Long ID_TEST = 1L;
 
     public static final String EMAIL_VALID = "test@email.com";
     public static final String PASSWORD_VALID = "password123";
