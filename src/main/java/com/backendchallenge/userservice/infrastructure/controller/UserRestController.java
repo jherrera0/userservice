@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +26,8 @@ public class UserRestController {
             @ApiResponse(responseCode = ConstDocumentation.CODE_201, description = ConstDocumentation.CREATE_OWNER_CODE_201),
             @ApiResponse(responseCode = ConstDocumentation.CODE_400, description = ConstDocumentation.CREATE_OWNER_CODE_400),
     })
-    public void createOwner(@RequestBody @Valid CreateOwnerRequest createOwnerRequest) {
+    @PostMapping(ConstRute.CREATE_OWNER_RUTE)
+    public void createOwner(@Valid @RequestBody CreateOwnerRequest createOwnerRequest) {
         userHandler.createOwner(createOwnerRequest);
     }
 }

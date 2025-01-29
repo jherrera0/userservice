@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserHandler implements IUserHandler {
     private final ICreateOwnerRequestMapper createOwnerRequestMapper;
-    IUserServicePort userServicePort;
+    public final IUserServicePort userServicePort;
     @Override
     public void createOwner(CreateOwnerRequest request) {
         userServicePort.createOwner(createOwnerRequestMapper.toUser(request));

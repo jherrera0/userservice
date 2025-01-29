@@ -1,5 +1,6 @@
 package com.backendchallenge.userservice.application.http.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -24,8 +25,8 @@ public class CreateOwnerRequest {
     @NotBlank
     @NotNull
     private String phone;
-    @NotBlank
     @NotNull
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthdate;
     @NotBlank
     @NotNull

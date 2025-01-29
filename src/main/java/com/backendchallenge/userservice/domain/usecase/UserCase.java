@@ -44,19 +44,19 @@ public class UserCase implements IUserServicePort {
     }
 
     private static void emailFormatValidation(String email) {
-        if (email.matches(ConstValidation.EMAIL_REGEX)) {
+        if (!email.matches(ConstValidation.EMAIL_REGEX)) {
             throw new InvalidUserEmailFormatException();
         }
     }
 
     private static void documentFormatValidation(String document) {
-        if (document.matches(ConstValidation.DOCUMENT_REGEX)) {
+        if (!document.matches(ConstValidation.DOCUMENT_REGEX)) {
             throw new InvalidUserDocumentFormatException();
         }
     }
 
     private static void phoneFormatValidation(String phone) {
-        if (phone.matches(ConstValidation.PHONE_REGEX)) {
+        if (!phone.matches(ConstValidation.PHONE_REGEX)) {
             throw new InvalidUserPhoneFormatException();
         }
     }
