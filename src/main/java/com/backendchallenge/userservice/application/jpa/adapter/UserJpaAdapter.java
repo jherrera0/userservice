@@ -23,4 +23,9 @@ public class UserJpaAdapter implements IUserPersistencePort {
         userEntity.setRole(roleEntity);
         userRepository.save(userEntity);
     }
+
+    @Override
+    public Boolean existsUserWithRole(Long userId, Role role) {
+        return userRepository.findByIdAndRole(userId, roleEntityMapper.toEntity(role));
+    }
 }

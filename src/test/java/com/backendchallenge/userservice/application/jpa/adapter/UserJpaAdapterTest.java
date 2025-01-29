@@ -7,6 +7,7 @@ import com.backendchallenge.userservice.application.jpa.mapper.IUserEntityMapper
 import com.backendchallenge.userservice.application.jpa.repository.IUserRepository;
 import com.backendchallenge.userservice.domain.model.Role;
 import com.backendchallenge.userservice.domain.model.User;
+import com.backendchallenge.userservice.domain.until.ConstTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class UserJpaAdapterTest {
@@ -58,4 +61,31 @@ class UserJpaAdapterTest {
         verify(roleEntityMapper, times(1)).toEntity(role);
     }
 
+    @Test
+    void existsUserWithRole_withExistingUserAndRole_shouldReturnTrue() {
+        Long userId = ConstTest.ID_TEST;
+        Role role = new Role();
+        RoleEntity roleEntity = new RoleEntity();
+
+        when(roleEntityMapper.toEntity(role)).thenReturn(roleEntity);
+        when(userRepository.findByIdAndRole(userId, roleEntity)).thenReturn(true);
+
+        Boolean result = userJpaAdapter.existsUserWithRole(userId, role);
+
+        assertTrue(result);
+    }
+
+    @Test
+    void existsUserWithRole_withNonExistingUserAndRole_shouldReturnFalse() {
+        Long userId = ConstTest.ID_TEST;
+        Role role = new Role();
+        RoleEntity roleEntity = new RoleEntity();
+
+        when(roleEntityMapper.toEntity(role)).thenReturn(roleEntity);
+        when(userRepository.findByIdAndRole(userId, roleEntity)).thenReturn(false);
+
+        Boolean result = userJpaAdapter.existsUserWithRole(userId, role);
+
+        assertFalse(result);
+    }
 }

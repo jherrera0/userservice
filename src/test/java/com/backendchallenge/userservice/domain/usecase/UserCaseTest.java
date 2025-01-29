@@ -58,7 +58,7 @@ class UserCaseTest {
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
-        Role role = new Role(ConstTest.ROLE_ID_TEST,ConstTest.ROLE_NAME_TEST);
+        Role role = new Role(ConstTest.ID_TEST,ConstTest.ROLE_NAME_TEST);
 
         when(roleServicePort.getRoleByName(ConstRole.OWNER)).thenReturn(role);
         when(encoderPersistencePort.encode(user.getPassword())).thenReturn(ConstTest.ENCODED_PASSWORD_TEST);
@@ -226,5 +226,35 @@ class UserCaseTest {
         user.setPassword(ConstTest.PASSWORD_VALID);
 
         assertThrows(UserOlderThatTheValidAgeException.class, () -> userCase.createOwner(user));
+    }
+
+    @Test
+    void findOwnerById_withExistingOwner_shouldReturnTrue() {
+        Long ownerId = ConstTest.ID_TEST;
+        Role role = new Role(ConstTest.ID_TEST, ConstRole.OWNER);
+
+        when(roleServicePort.getRoleByName(ConstRole.OWNER)).thenReturn(role);
+        when(userPersistencePort.existsUserWithRole(ownerId, role)).thenReturn(true);
+
+        Boolean result = userCase.findOwnerById(ownerId);
+
+        assertTrue(result);
+        verify(roleServicePort, times(1)).getRoleByName(ConstRole.OWNER);
+        verify(userPersistencePort, times(1)).existsUserWithRole(ownerId, role);
+    }
+
+    @Test
+    void findOwnerById_withNonExistingOwner_shouldReturnFalse() {
+        Long ownerId = ConstTest.ID_TEST;
+        Role role = new Role(ConstTest.ID_TEST, ConstRole.OWNER);
+
+        when(roleServicePort.getRoleByName(ConstRole.OWNER)).thenReturn(role);
+        when(userPersistencePort.existsUserWithRole(ownerId, role)).thenReturn(false);
+
+        Boolean result = userCase.findOwnerById(ownerId);
+
+        assertFalse(result);
+        verify(roleServicePort, times(1)).getRoleByName(ConstRole.OWNER);
+        verify(userPersistencePort, times(1)).existsUserWithRole(ownerId, role);
     }
 }

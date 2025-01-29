@@ -29,7 +29,7 @@ class RoleCaseTest {
     void setUp() {
         role = new Role();
         role.setName(ConstTest.ROLE_NAME_TEST);
-        role.setId(ConstTest.ROLE_ID_TEST);
+        role.setId(ConstTest.ID_TEST);
         closeable = MockitoAnnotations.openMocks(this);
     }
 

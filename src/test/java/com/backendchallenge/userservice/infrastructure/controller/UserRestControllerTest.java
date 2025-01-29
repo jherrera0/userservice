@@ -15,6 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -85,5 +87,31 @@ class UserRestControllerTest {
                     }
                 """))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void findOwnerById_withExistingOwnerId_shouldReturnStatus200() throws Exception {
+        Long ownerId = ConstTest.ID_TEST;
+
+        when(userHandler.findOwnerById(ownerId)).thenReturn(true);
+
+        mockMvc.perform(get(ConstRute.USER_REST_RUTE + ConstRute.FIND_OWNER_BY_ID_RUTE)
+                        .param("ownerId", ownerId.toString()))
+                .andExpect(status().isOk());
+
+        verify(userHandler).findOwnerById(ownerId);
+    }
+
+    @Test
+    void findOwnerById_withNonExistingOwnerId_shouldReturnStatus200WithFalseBody() throws Exception {
+        Long ownerId = ConstTest.ID_TEST;
+
+        when(userHandler.findOwnerById(ownerId)).thenReturn(false);
+
+        mockMvc.perform(get(ConstRute.USER_REST_RUTE + ConstRute.FIND_OWNER_BY_ID_RUTE)
+                        .param("ownerId", ownerId.toString()))
+                .andExpect(status().isOk());
+
+        verify(userHandler).findOwnerById(ownerId);
     }
 }
