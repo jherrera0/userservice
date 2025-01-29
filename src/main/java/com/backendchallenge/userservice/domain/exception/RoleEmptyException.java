@@ -1,9 +1,9 @@
 package com.backendchallenge.userservice.domain.exception;
 
-import com.backendchallenge.userservice.domain.until.ConstException;
+import com.backendchallenge.userservice.domain.until.ConstExceptions;
 
 public class RoleEmptyException extends RuntimeException {
     public RoleEmptyException() {
-        super(ConstException.ROLE_EMPTY);
+        super(ConstExceptions.ROLE_EMPTY);
     }
 }

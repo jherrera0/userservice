@@ -2,7 +2,7 @@ package com.backendchallenge.userservice.domain.until;
 
 import java.time.LocalDate;
 
-public record ConstTest() {
+public class ConstTest {
     public static final String ROLE_NAME_TEST = "RoleTest";
     public static final Long ROLE_ID_TEST = 1L;
 
@@ -12,6 +12,7 @@ public record ConstTest() {
     public static final String DOCUMENT_VALID = "12345678";
     public static final String PHONE_VALID = "3244710909";
     public static final LocalDate BIRTHDATE_VALID = LocalDate.of(1990, 1, 1);
+    public static final String BIRTHDATE_STRING_VALID = "01/01/1990";
     public static final String NAME_VALID = "John";
     public static final String LAST_NAME_VALID = "Doe";
 
@@ -33,4 +34,7 @@ public record ConstTest() {
     public static final Long ROLE_ID_NEW = 2L;
     public static final String ROLE_NAME_NEW = "New Role";
     public static final String ENCODED_PASSWORD_TEST = "ENCODED";
+
+    private ConstTest() {
+    }
 }

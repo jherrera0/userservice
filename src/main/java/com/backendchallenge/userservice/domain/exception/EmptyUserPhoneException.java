@@ -1,9 +1,9 @@
 package com.backendchallenge.userservice.domain.exception;
 
-import com.backendchallenge.userservice.domain.until.ConstException;
+import com.backendchallenge.userservice.domain.until.ConstExceptions;
 
 public class EmptyUserPhoneException extends RuntimeException {
     public EmptyUserPhoneException() {
-        super(ConstException.USER_PHONE_EMPTY);
+        super(ConstExceptions.USER_PHONE_EMPTY);
     }
 }

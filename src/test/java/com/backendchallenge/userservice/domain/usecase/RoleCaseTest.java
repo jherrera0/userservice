@@ -3,7 +3,7 @@ package com.backendchallenge.userservice.domain.usecase;
 import com.backendchallenge.userservice.domain.exception.RoleEmptyException;
 import com.backendchallenge.userservice.domain.model.Role;
 import com.backendchallenge.userservice.domain.spi.IRolePersistencePort;
-import com.backendchallenge.userservice.domain.until.ConstException;
+import com.backendchallenge.userservice.domain.until.ConstExceptions;
 import com.backendchallenge.userservice.domain.until.ConstTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,13 +59,13 @@ class RoleCaseTest {
     void testGetRoleByName_EmptyName() {
         // Act & Assert
         assertThrows(RoleEmptyException.class, () -> roleCase.getRoleByName(ConstTest.EMPTY_STRING),
-                ConstException.ROLE_EMPTY);
+                ConstExceptions.ROLE_EMPTY);
     }
 
     @Test
     void testGetRoleByName_NullName() {
         // Act & Assert
         assertThrows(RoleEmptyException.class, () -> roleCase.getRoleByName(null),
-                ConstException.ROLE_EMPTY);
+                ConstExceptions.ROLE_EMPTY);
     }
 }

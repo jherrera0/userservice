@@ -1,9 +1,9 @@
 package com.backendchallenge.userservice.domain.exception;
 
-import com.backendchallenge.userservice.domain.until.ConstException;
+import com.backendchallenge.userservice.domain.until.ConstExceptions;
 
 public class EmptyUserPasswordException extends RuntimeException {
     public EmptyUserPasswordException() {
-        super(ConstException.USER_PASSWORD_EMPTY);
+        super(ConstExceptions.USER_PASSWORD_EMPTY);
     }
 }

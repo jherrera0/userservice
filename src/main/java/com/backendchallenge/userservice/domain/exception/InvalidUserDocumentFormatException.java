@@ -1,9 +1,9 @@
 package com.backendchallenge.userservice.domain.exception;
 
-import com.backendchallenge.userservice.domain.until.ConstException;
+import com.backendchallenge.userservice.domain.until.ConstExceptions;
 
 public class InvalidUserDocumentFormatException extends RuntimeException {
     public InvalidUserDocumentFormatException() {
-        super(ConstException.INVALID_USER_DOCUMENT_FORMAT);
+        super(ConstExceptions.INVALID_USER_DOCUMENT_FORMAT);
     }
 }
