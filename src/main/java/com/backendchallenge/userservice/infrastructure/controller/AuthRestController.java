@@ -5,6 +5,7 @@ import com.backendchallenge.userservice.application.http.dto.AuthResponse;
 import com.backendchallenge.userservice.application.http.handler.interfaces.IAuthHandler;
 import com.backendchallenge.userservice.domain.until.ConstDocumentation;
 import com.backendchallenge.userservice.domain.until.ConstRute;
+import com.backendchallenge.userservice.domain.until.JwtConst;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,7 +34,7 @@ public class AuthRestController {
             @ApiResponse(responseCode = ConstDocumentation.CODE_403,
                     description = ConstDocumentation.AUTH_LOGIN_DESCRIPTION_403, content = @Content)
     })
-    @PreAuthorize("permitAll()")
+    @PreAuthorize(JwtConst.PERMIT_ALL)
     @PostMapping(ConstRute.LOGIN)
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest authRequest) {
         return ResponseEntity.ok(authHandler.login(authRequest.getUsername(), authRequest.getPassword()));

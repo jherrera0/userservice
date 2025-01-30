@@ -4,6 +4,7 @@ import com.backendchallenge.userservice.application.http.dto.CreateOwnerRequest;
 import com.backendchallenge.userservice.application.http.handler.interfaces.IUserHandler;
 import com.backendchallenge.userservice.domain.until.ConstDocumentation;
 import com.backendchallenge.userservice.domain.until.ConstRute;
+import com.backendchallenge.userservice.domain.until.JwtConst;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -12,6 +13,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -25,6 +27,7 @@ public class UserRestController {
             @ApiResponse(responseCode = ConstDocumentation.CODE_201, description = ConstDocumentation.CREATE_OWNER_CODE_201),
             @ApiResponse(responseCode = ConstDocumentation.CODE_400, description = ConstDocumentation.CREATE_OWNER_CODE_400),
     })
+    @PreAuthorize(JwtConst.HAS_ROLE_ADMIN)
     @PostMapping(ConstRute.CREATE_OWNER_RUTE)
     public ResponseEntity<String> createOwner(@Valid @RequestBody CreateOwnerRequest createOwnerRequest) {
         userHandler.createOwner(createOwnerRequest);
@@ -35,6 +38,7 @@ public class UserRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = ConstDocumentation.CODE_201, description = ConstDocumentation.FIND_OWNER_CODE_201),
     })
+    @PreAuthorize(JwtConst.HAS_ROLE_ADMIN)
     @GetMapping(ConstRute.FIND_OWNER_BY_ID_RUTE)
     public ResponseEntity<Boolean> findOwnerById(@RequestParam Long ownerId) {
         return ResponseEntity.ok(userHandler.findOwnerById(ownerId));
