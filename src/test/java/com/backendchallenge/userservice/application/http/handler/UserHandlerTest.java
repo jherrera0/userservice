@@ -81,4 +81,24 @@ class UserHandlerTest {
         assertFalse(result);
         verify(userServicePort, times(1)).findOwnerById(ownerId);
     }
+
+    @Test
+    void createEmployee_ValidRequest_CallsServiceLayer() {
+        CreateOwnerRequest request = new CreateOwnerRequest();
+        request.setEmail(ConstTest.EMAIL_VALID);
+        request.setPassword(ConstTest.PASSWORD_VALID);
+        request.setDocument(ConstTest.DOCUMENT_VALID);
+        request.setPhone(ConstTest.PHONE_VALID);
+        request.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        request.setName(ConstTest.NAME_VALID);
+        request.setLastName(ConstTest.LAST_NAME_VALID);
+
+        User mockedUser = new User();
+        when(createOwnerRequestMapper.toUser(request)).thenReturn(mockedUser);
+
+        userHandler.createEmployee(request);
+
+        verify(createOwnerRequestMapper, times(1)).toUser(request);
+        verify(userServicePort, times(1)).createEmployee(mockedUser);
+    }
 }
