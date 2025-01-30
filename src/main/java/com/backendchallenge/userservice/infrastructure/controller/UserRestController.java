@@ -31,6 +31,10 @@ public class UserRestController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @Operation(summary = ConstDocumentation.FIND_OWNER_OPERATION)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = ConstDocumentation.CODE_201, description = ConstDocumentation.FIND_OWNER_CODE_201),
+    })
     @GetMapping(ConstRute.FIND_OWNER_BY_ID_RUTE)
     public ResponseEntity<Boolean> findOwnerById(@RequestParam Long ownerId) {
         return ResponseEntity.ok(userHandler.findOwnerById(ownerId));
