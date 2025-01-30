@@ -32,6 +32,7 @@ class UserTest {
         user.setBirthdate(ConstTest.BIRTHDATE_NEW);
         user.setName(ConstTest.NAME_NEW);
         user.setLastName(ConstTest.LAST_NAME_NEW);
+        user.setRole(ConstTest.ROLE_NAME_TEST);
         assertEquals(ConstTest.ID_TEST, user.getId());
         assertEquals(ConstTest.EMAIL_NEW, user.getEmail());
         assertEquals(ConstTest.PASSWORD_NEW, user.getPassword());
@@ -40,6 +41,7 @@ class UserTest {
         assertEquals(ConstTest.BIRTHDATE_NEW, user.getBirthdate());
         assertEquals(ConstTest.NAME_NEW, user.getName());
         assertEquals(ConstTest.LAST_NAME_NEW, user.getLastName());
+        assertEquals(ConstTest.ROLE_NAME_TEST, user.getRole());
     }
 
     @Test
