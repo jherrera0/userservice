@@ -4,6 +4,8 @@ import com.backendchallenge.userservice.application.jpa.entity.UserEntity;
 import com.backendchallenge.userservice.application.jpa.repository.IUserRepository;
 import com.backendchallenge.userservice.application.jwt.JwtService;
 import com.backendchallenge.userservice.domain.until.ConstExceptions;
+import com.backendchallenge.userservice.domain.until.ConstRute;
+import com.backendchallenge.userservice.domain.until.ConstValidation;
 import com.backendchallenge.userservice.domain.until.JwtConst;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -38,6 +40,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
+        if (!authorizationHeader.contains(JwtConst.SPLITERSTRING) ||
+                authorizationHeader.split(JwtConst.SPLITERSTRING).length < ConstValidation.TWO) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, ConstExceptions.TOKEN_EMPTY);
+            return;
+        }
+
+
         String jwt = authorizationHeader.split(JwtConst.SPLITERSTRING)[1];
 
         try {
@@ -64,9 +73,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (MalformedJwtException e) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ConstExceptions.TOKEN_MALFORMED);
             return;
-        } catch (IllegalArgumentException e) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ConstExceptions.TOKEN_EMPTY);
-            return;
         }
 
         filterChain.doFilter(request, response);
@@ -75,6 +81,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
-        return path.startsWith("/api/auth/login") || path.startsWith("/api/auth/register");
+        return path.startsWith(ConstRute.AUTH+ConstRute.LOGIN);
     }
 }
