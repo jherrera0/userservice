@@ -114,4 +114,52 @@ class UserRestControllerTest {
 
         verify(userHandler).findOwnerById(ownerId);
     }
+
+    @Test
+    void createEmployee_withValidRequest_shouldReturnStatus201() throws Exception {
+        CreateOwnerRequest request = new CreateOwnerRequest(
+                ConstTest.EMAIL_VALID,
+                ConstTest.PASSWORD_VALID,
+                ConstTest.DOCUMENT_VALID,
+                ConstTest.PHONE_VALID,
+                ConstTest.BIRTHDATE_VALID,
+                ConstTest.NAME_VALID,
+                ConstTest.LAST_NAME_VALID
+        );
+
+        mockMvc.perform(post(ConstRute.USER_REST_RUTE + ConstRute.CREATE_EMPLOYEE_RUTE)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                {
+                    "email": "%s",
+                    "password": "%s",
+                    "document": "%s",
+                    "phone": "%s",
+                    "birthdate": "%s",
+                    "name": "%s",
+                    "lastName": "%s"
+                }
+            """.formatted(ConstTest.EMAIL_VALID, ConstTest.PASSWORD_VALID, ConstTest.DOCUMENT_VALID, ConstTest.PHONE_VALID, ConstTest.BIRTHDATE_STRING_VALID, ConstTest.NAME_VALID, ConstTest.LAST_NAME_VALID)))
+                .andExpect(status().isCreated());
+
+        verify(userHandler).createEmployee(request);
+    }
+
+    @Test
+    void createEmployee_withInvalidRequest_shouldReturnStatus400() throws Exception {
+        mockMvc.perform(post(ConstRute.USER_REST_RUTE + ConstRute.CREATE_EMPLOYEE_RUTE)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                {
+                    "email": "",
+                    "password": "",
+                    "document": "",
+                    "phone": "",
+                    "birthdate": "01/01/2020",
+                    "name": "",
+                    "lastName": ""
+                }
+            """))
+                .andExpect(status().isBadRequest());
+    }
 }
