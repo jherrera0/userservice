@@ -257,4 +257,185 @@ class UserCaseTest {
         verify(roleServicePort, times(1)).getRoleByName(ConstRole.OWNER);
         verify(userPersistencePort, times(1)).existsUserWithRole(ownerId, role);
     }
+
+    @Test
+    void createEmployee_withValidUser_shouldCreateEmployee() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        Role role = new Role(ConstTest.ID_TEST, ConstRole.EMPLOYEE);
+
+        when(roleServicePort.getRoleByName(ConstRole.EMPLOYEE)).thenReturn(role);
+        when(encoderPersistencePort.encode(user.getPassword())).thenReturn(ConstTest.ENCODED_PASSWORD_TEST);
+
+        userCase.createEmployee(user);
+
+        assertEquals(ConstTest.ENCODED_PASSWORD_TEST, user.getPassword());
+        verify(userPersistencePort, times(1)).saveUserWithRole(user, role);
+    }
+
+    @Test
+    void createEmployee_withNullUser_shouldThrowException() {
+        assertThrows(EmptyUserNameException.class, () -> userCase.createEmployee(null));
+    }
+
+    @Test
+    void createEmployee_withEmptyUserName_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.EMPTY_STRING);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(EmptyUserNameException.class, () -> userCase.createEmployee(user));
+    }
+
+    @Test
+    void createEmployee_withInvalidEmailFormat_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.INVALID_EMAIL_TEST);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(InvalidUserEmailFormatException.class, () -> userCase.createEmployee(user));
+    }
+
+    @Test
+    void createEmployee_withInvalidPhoneFormat_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.INVALID_PHONE_TEST);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(InvalidUserPhoneFormatException.class, () -> userCase.createEmployee(user));
+    }
+
+    @Test
+    void createEmployee_withInvalidDocumentFormat_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.INVALID_DOCUMENT_TEST);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(InvalidUserDocumentFormatException.class, () -> userCase.createEmployee(user));
+    }
+
+    @Test
+    void createEmployee_withEmptyLastName_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.EMPTY_STRING);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(EmptyUserLastNameException.class, () -> userCase.createEmployee(user));
+    }
+
+    @Test
+    void createEmployee_withBlankDocument_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.EMPTY_STRING);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(EmptyUserDocumentException.class, () -> userCase.createEmployee(user));
+    }
+
+    @Test
+    void createEmployee_withBlankPhone_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.EMPTY_STRING);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(EmptyUserPhoneException.class, () -> userCase.createEmployee(user));
+    }
+
+    @Test
+    void createEmployee_withNullBirthdate_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(null);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(EmptyUserBirthdateException.class, () -> userCase.createEmployee(user));
+    }
+
+    @Test
+    void createEmployee_withBlankEmail_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMPTY_STRING);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(EmptyUserEmailException.class, () -> userCase.createEmployee(user));
+    }
+
+    @Test
+    void createEmployee_withBlankPassword_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.EMPTY_STRING);
+
+        assertThrows(EmptyUserPasswordException.class, () -> userCase.createEmployee(user));
+    }
+
+    @Test
+    void createEmployee_withUserOlderThanValidAge_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(LocalDate.now().minusYears(ConstValidation.MIN_AGE - 1));
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(UserOlderThatTheValidAgeException.class, () -> userCase.createEmployee(user));
+    }
 }

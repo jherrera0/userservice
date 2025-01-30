@@ -1,7 +1,7 @@
 package com.backendchallenge.userservice.application.http.handler;
 
-import com.backendchallenge.userservice.application.http.dto.CreateOwnerRequest;
-import com.backendchallenge.userservice.application.http.mapper.ICreateOwnerRequestMapper;
+import com.backendchallenge.userservice.application.http.dto.CreateUserRequest;
+import com.backendchallenge.userservice.application.http.mapper.ICreateUserRequestMapper;
 import com.backendchallenge.userservice.domain.api.IUserServicePort;
 import com.backendchallenge.userservice.domain.model.User;
 import com.backendchallenge.userservice.domain.until.ConstTest;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 class UserHandlerTest {
 
     @Mock
-    private ICreateOwnerRequestMapper createOwnerRequestMapper;
+    private ICreateUserRequestMapper createOwnerRequestMapper;
 
     @Mock
     private IUserServicePort userServicePort;
@@ -43,7 +43,7 @@ class UserHandlerTest {
 
     @Test
     void createOwner_ValidRequest_CallsServiceLayer() {
-        CreateOwnerRequest request = new CreateOwnerRequest();
+        CreateUserRequest request = new CreateUserRequest();
         request.setEmail(ConstTest.EMAIL_VALID);
         request.setPassword(ConstTest.PASSWORD_VALID);
         request.setDocument(ConstTest.DOCUMENT_VALID);
@@ -80,5 +80,25 @@ class UserHandlerTest {
 
         assertFalse(result);
         verify(userServicePort, times(1)).findOwnerById(ownerId);
+    }
+
+    @Test
+    void createEmployee_ValidRequest_CallsServiceLayer() {
+        CreateUserRequest request = new CreateUserRequest();
+        request.setEmail(ConstTest.EMAIL_VALID);
+        request.setPassword(ConstTest.PASSWORD_VALID);
+        request.setDocument(ConstTest.DOCUMENT_VALID);
+        request.setPhone(ConstTest.PHONE_VALID);
+        request.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        request.setName(ConstTest.NAME_VALID);
+        request.setLastName(ConstTest.LAST_NAME_VALID);
+
+        User mockedUser = new User();
+        when(createOwnerRequestMapper.toUser(request)).thenReturn(mockedUser);
+
+        userHandler.createEmployee(request);
+
+        verify(createOwnerRequestMapper, times(1)).toUser(request);
+        verify(userServicePort, times(1)).createEmployee(mockedUser);
     }
 }

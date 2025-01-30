@@ -30,6 +30,14 @@ public class UserCase implements IUserServicePort {
     }
 
     @Override
+    public void createEmployee(User user) {
+        validateOfUserParams(user);
+        Role role = roleServicePort.getRoleByName(ConstRole.EMPLOYEE);
+        user.setPassword(encoderPersistencePort.encode(user.getPassword()));
+        saveUserWithRole(user, role);
+    }
+
+    @Override
     public void createOwner(User user) {
         validateOfUserParams(user);
         Role role = roleServicePort.getRoleByName(ConstRole.OWNER);
