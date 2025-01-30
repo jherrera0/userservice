@@ -9,7 +9,7 @@ public class JwtConst {
     public static final String HEADER_STRING = "Authorization";
     public static final String ID = "Id";
     public static final String ROLE = "Role";
-    public static final String PERMIT_ALL = "PermitAll()";
+    public static final String PERMIT_ALL = "permitAll()";
     public static final String HAS_ROLE_ADMIN = "hasRole('ADMIN')";
 
 
