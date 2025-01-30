@@ -5,6 +5,7 @@ public class ConstValidation {
     public static final String  EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     public static final String DOCUMENT_REGEX = "\\d+";
     public static final int MIN_AGE = 18;
+    public static final int TWO = 2;
 
     private ConstValidation() {
     }

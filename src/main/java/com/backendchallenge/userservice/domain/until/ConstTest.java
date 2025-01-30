@@ -32,6 +32,20 @@ public class ConstTest {
     public static final String ROLE_NAME_NEW = "New Role";
     public static final String ENCODED_PASSWORD_TEST = "ENCODED";
 
+    public static final String VALID_TOKEN = "valid.token.here";
+    public static final String EXPIRED_TOKEN = "expired.token.here";
+    public static final String UNSUPPORTED_TOKEN = "unsupported.token.here";
+    public static final String MALFORMED_TOKEN = "malformed.token.here";
+    public static final String EMPTY_TOKEN = " ";
+    public static final String USER_EMAIL = "user@example.com";
+    public static final String NOT_FOUND_EMAIL = "NotFound@test.com";
+
+    public static final String FIELD1 = "field1";
+    public static final String FIELD2 = "field2";
+    public static final String ERROR1 = "error1";
+    public static final String ERROR2 = "error2";
+    public static final Integer AUTHORITIES_SIZE = 1;
+
     private ConstTest() {
     }
 }

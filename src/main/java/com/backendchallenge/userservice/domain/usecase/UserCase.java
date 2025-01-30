@@ -2,7 +2,7 @@ package com.backendchallenge.userservice.domain.usecase;
 
 import com.backendchallenge.userservice.domain.api.IRoleServicePort;
 import com.backendchallenge.userservice.domain.api.IUserServicePort;
-import com.backendchallenge.userservice.domain.exception.*;
+import com.backendchallenge.userservice.domain.exception.userexceptions.*;
 import com.backendchallenge.userservice.domain.model.Role;
 import com.backendchallenge.userservice.domain.model.User;
 import com.backendchallenge.userservice.domain.spi.IEncoderPersistencePort;

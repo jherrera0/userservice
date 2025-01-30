@@ -1,6 +1,6 @@
 package com.backendchallenge.userservice.domain.usecase;
 
-import com.backendchallenge.userservice.domain.exception.RoleEmptyException;
+import com.backendchallenge.userservice.domain.exception.roleexceptions.RoleEmptyException;
 import com.backendchallenge.userservice.domain.model.Role;
 import com.backendchallenge.userservice.domain.spi.IRolePersistencePort;
 import com.backendchallenge.userservice.domain.until.ConstExceptions;

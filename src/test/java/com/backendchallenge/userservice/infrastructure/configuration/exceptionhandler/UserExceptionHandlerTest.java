@@ -1,6 +1,6 @@
 package com.backendchallenge.userservice.infrastructure.configuration.exceptionhandler;
 
-import com.backendchallenge.userservice.domain.exception.*;
+import com.backendchallenge.userservice.domain.exception.userexceptions.*;
 import com.backendchallenge.userservice.domain.until.ConstExceptions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

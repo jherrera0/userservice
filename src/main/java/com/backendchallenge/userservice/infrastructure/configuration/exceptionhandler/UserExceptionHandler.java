@@ -1,6 +1,6 @@
 package com.backendchallenge.userservice.infrastructure.configuration.exceptionhandler;
 
-import com.backendchallenge.userservice.domain.exception.*;
+import com.backendchallenge.userservice.domain.exception.userexceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
