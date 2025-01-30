@@ -1,4 +1,4 @@
-package com.backendchallenge.userservice.domain.exception;
+package com.backendchallenge.userservice.domain.exception.roleexceptions;
 
 import com.backendchallenge.userservice.domain.until.ConstExceptions;
 

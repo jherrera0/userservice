@@ -2,7 +2,7 @@ package com.backendchallenge.userservice.infrastructure.configuration.security.f
 
 import com.backendchallenge.userservice.application.jpa.entity.UserEntity;
 import com.backendchallenge.userservice.application.jpa.repository.IUserRepository;
-import com.backendchallenge.userservice.domain.exception.MalformJwtException;
+import com.backendchallenge.userservice.domain.exception.authexceptions.MalformJwtException;
 import com.backendchallenge.userservice.domain.until.JwtConst;
 import com.backendchallenge.userservice.infrastructure.configuration.security.JwtService;
 import jakarta.servlet.FilterChain;

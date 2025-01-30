@@ -1,9 +1,8 @@
 package com.backendchallenge.userservice.infrastructure.configuration.security;
 
 
-import com.backendchallenge.userservice.domain.exception.MalformJwtException;
+import com.backendchallenge.userservice.domain.exception.authexceptions.MalformJwtException;
 import com.backendchallenge.userservice.domain.model.User;
-import com.backendchallenge.userservice.domain.until.ConstExceptions;
 import com.backendchallenge.userservice.domain.until.JwtConst;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
