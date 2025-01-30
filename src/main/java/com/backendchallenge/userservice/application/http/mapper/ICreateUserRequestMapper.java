@@ -1,6 +1,6 @@
 package com.backendchallenge.userservice.application.http.mapper;
 
-import com.backendchallenge.userservice.application.http.dto.CreateOwnerRequest;
+import com.backendchallenge.userservice.application.http.dto.CreateUserRequest;
 import com.backendchallenge.userservice.domain.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -10,5 +10,5 @@ import org.mapstruct.ReportingPolicy;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 
 public interface ICreateUserRequestMapper {
-    User toUser(CreateOwnerRequest createOwnerRequest);
+    User toUser(CreateUserRequest createUserRequest);
 }

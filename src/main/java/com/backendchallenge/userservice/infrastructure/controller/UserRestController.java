@@ -1,6 +1,6 @@
 package com.backendchallenge.userservice.infrastructure.controller;
 
-import com.backendchallenge.userservice.application.http.dto.CreateOwnerRequest;
+import com.backendchallenge.userservice.application.http.dto.CreateUserRequest;
 import com.backendchallenge.userservice.application.http.handler.interfaces.IUserHandler;
 import com.backendchallenge.userservice.domain.until.ConstDocumentation;
 import com.backendchallenge.userservice.domain.until.ConstRute;
@@ -30,8 +30,8 @@ public class UserRestController {
     })
     @PreAuthorize(JwtConst.HAS_ROLE_ADMIN)
     @PostMapping(ConstRute.CREATE_OWNER_RUTE)
-    public ResponseEntity<String> createOwner(@Valid @RequestBody CreateOwnerRequest createOwnerRequest) {
-        userHandler.createOwner(createOwnerRequest);
+    public ResponseEntity<String> createOwner(@Valid @RequestBody CreateUserRequest createUserRequest) {
+        userHandler.createOwner(createUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -53,8 +53,8 @@ public class UserRestController {
     })
     @PreAuthorize(JwtConst.HAS_ROLE_OWNER)
     @PostMapping(ConstRute.CREATE_EMPLOYEE_RUTE)
-    public ResponseEntity<String> createEmployee(@Valid @RequestBody CreateOwnerRequest createOwnerRequest) {
-        userHandler.createEmployee(createOwnerRequest);
+    public ResponseEntity<String> createEmployee(@Valid @RequestBody CreateUserRequest createUserRequest) {
+        userHandler.createEmployee(createUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

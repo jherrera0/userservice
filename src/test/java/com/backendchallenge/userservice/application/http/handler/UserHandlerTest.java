@@ -1,6 +1,6 @@
 package com.backendchallenge.userservice.application.http.handler;
 
-import com.backendchallenge.userservice.application.http.dto.CreateOwnerRequest;
+import com.backendchallenge.userservice.application.http.dto.CreateUserRequest;
 import com.backendchallenge.userservice.application.http.mapper.ICreateUserRequestMapper;
 import com.backendchallenge.userservice.domain.api.IUserServicePort;
 import com.backendchallenge.userservice.domain.model.User;
@@ -43,7 +43,7 @@ class UserHandlerTest {
 
     @Test
     void createOwner_ValidRequest_CallsServiceLayer() {
-        CreateOwnerRequest request = new CreateOwnerRequest();
+        CreateUserRequest request = new CreateUserRequest();
         request.setEmail(ConstTest.EMAIL_VALID);
         request.setPassword(ConstTest.PASSWORD_VALID);
         request.setDocument(ConstTest.DOCUMENT_VALID);
@@ -84,7 +84,7 @@ class UserHandlerTest {
 
     @Test
     void createEmployee_ValidRequest_CallsServiceLayer() {
-        CreateOwnerRequest request = new CreateOwnerRequest();
+        CreateUserRequest request = new CreateUserRequest();
         request.setEmail(ConstTest.EMAIL_VALID);
         request.setPassword(ConstTest.PASSWORD_VALID);
         request.setDocument(ConstTest.DOCUMENT_VALID);

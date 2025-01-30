@@ -1,6 +1,6 @@
 package com.backendchallenge.userservice.infrastructure.controller;
 
-import com.backendchallenge.userservice.application.http.dto.CreateOwnerRequest;
+import com.backendchallenge.userservice.application.http.dto.CreateUserRequest;
 import com.backendchallenge.userservice.application.http.handler.interfaces.IUserHandler;
 import com.backendchallenge.userservice.domain.until.ConstRute;
 import com.backendchallenge.userservice.domain.until.ConstTest;
@@ -43,7 +43,7 @@ class UserRestControllerTest {
     }
     @Test
     void createOwner_withValidRequest_shouldReturnStatus201() throws Exception {
-        CreateOwnerRequest request = new CreateOwnerRequest(
+        CreateUserRequest request = new CreateUserRequest(
                 ConstTest.EMAIL_VALID,
                 ConstTest.PASSWORD_VALID,
                 ConstTest.DOCUMENT_VALID,
@@ -117,7 +117,7 @@ class UserRestControllerTest {
 
     @Test
     void createEmployee_withValidRequest_shouldReturnStatus201() throws Exception {
-        CreateOwnerRequest request = new CreateOwnerRequest(
+        CreateUserRequest request = new CreateUserRequest(
                 ConstTest.EMAIL_VALID,
                 ConstTest.PASSWORD_VALID,
                 ConstTest.DOCUMENT_VALID,

@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateOwnerRequest {
+public class CreateUserRequest {
     @NotBlank
     @NotNull
     private String email;
