@@ -45,7 +45,7 @@ public class AuthJpaAdapter implements IAuthPersistencePort {
         if (user == null) {
             return null;
         }
-        return jwtService.generateToken(user, generateExtraClaims(user));
+        return jwtService.generateToken(user.getEmail(), generateExtraClaims(user));
     }
 
     @Override

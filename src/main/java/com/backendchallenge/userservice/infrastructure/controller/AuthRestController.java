@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class AuthRestController {
             @ApiResponse(responseCode = ConstDocumentation.CODE_403,
                     description = ConstDocumentation.AUTH_LOGIN_DESCRIPTION_403, content = @Content)
     })
+    @PreAuthorize("permitAll()")
     @PostMapping(ConstRute.LOGIN)
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest authRequest) {
         return ResponseEntity.ok(authHandler.login(authRequest.getUsername(), authRequest.getPassword()));

@@ -1,5 +1,6 @@
 package com.backendchallenge.userservice.infrastructure.configuration;
 
+import com.backendchallenge.userservice.application.jpa.adapter.AuthJpaAdapter;
 import com.backendchallenge.userservice.application.jpa.adapter.EncoderJpaAdapter;
 import com.backendchallenge.userservice.application.jpa.adapter.RoleJpaAdapter;
 import com.backendchallenge.userservice.application.jpa.adapter.UserJpaAdapter;
@@ -7,16 +8,21 @@ import com.backendchallenge.userservice.application.jpa.mapper.IRoleEntityMapper
 import com.backendchallenge.userservice.application.jpa.mapper.IUserEntityMapper;
 import com.backendchallenge.userservice.application.jpa.repository.IRoleRepository;
 import com.backendchallenge.userservice.application.jpa.repository.IUserRepository;
+import com.backendchallenge.userservice.application.jwt.JwtService;
+import com.backendchallenge.userservice.domain.api.IAuthServicePort;
 import com.backendchallenge.userservice.domain.api.IRoleServicePort;
 import com.backendchallenge.userservice.domain.api.IUserServicePort;
+import com.backendchallenge.userservice.domain.spi.IAuthPersistencePort;
 import com.backendchallenge.userservice.domain.spi.IEncoderPersistencePort;
 import com.backendchallenge.userservice.domain.spi.IRolePersistencePort;
 import com.backendchallenge.userservice.domain.spi.IUserPersistencePort;
+import com.backendchallenge.userservice.domain.usecase.AuthCase;
 import com.backendchallenge.userservice.domain.usecase.RoleCase;
 import com.backendchallenge.userservice.domain.usecase.UserCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -27,10 +33,22 @@ public class BeanConfiguration {
     private final IRoleEntityMapper roleEntityMapper;
     private final IUserEntityMapper userEntityMapper;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     @Bean
-    public IUserPersistencePort userPersistencePort(){
+    public IUserPersistencePort userPersistencePort() {
         return new UserJpaAdapter(userRepository, roleEntityMapper, userEntityMapper);
+    }
+
+    @Bean
+    public IAuthServicePort authServicePort() {
+        return new AuthCase(authPersistencePort());
+    }
+
+    @Bean
+    public IAuthPersistencePort authPersistencePort() {
+        return new AuthJpaAdapter(authenticationManager, jwtService, userRepository);
     }
 
     @Bean
