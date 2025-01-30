@@ -4,7 +4,7 @@ import com.backendchallenge.userservice.application.jpa.entity.UserEntity;
 import com.backendchallenge.userservice.application.jpa.repository.IUserRepository;
 import com.backendchallenge.userservice.domain.exception.authexceptions.MalformJwtException;
 import com.backendchallenge.userservice.domain.until.JwtConst;
-import com.backendchallenge.userservice.infrastructure.configuration.security.JwtService;
+import com.backendchallenge.userservice.application.jwt.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

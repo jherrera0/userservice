@@ -11,11 +11,13 @@ public class User {
     private LocalDate birthdate;
     private String name;
     private String lastName;
+    private String role;
 
     public User() {
     }
 
-    public User( String email, String password, String document, String phone, LocalDate birthdate, String name, String lastName) {
+    public User( String email, String password, String document, String phone, LocalDate birthdate, String name,
+                 String lastName) {
         this.email = email;
         this.password = password;
         this.document = document;
@@ -87,5 +89,13 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setRole(String name) {
+        this.role = name;
+    }
+
+    public String getRole() {
+        return role;
     }
 }

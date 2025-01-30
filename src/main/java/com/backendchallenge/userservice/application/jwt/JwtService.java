@@ -1,4 +1,4 @@
-package com.backendchallenge.userservice.infrastructure.configuration.security;
+package com.backendchallenge.userservice.application.jwt;
 
 
 import com.backendchallenge.userservice.domain.exception.authexceptions.MalformJwtException;
