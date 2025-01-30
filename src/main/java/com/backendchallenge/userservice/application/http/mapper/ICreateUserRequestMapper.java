@@ -9,6 +9,6 @@ import org.mapstruct.ReportingPolicy;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 
-public interface ICreateOwnerRequestMapper {
+public interface ICreateUserRequestMapper {
     User toUser(CreateOwnerRequest createOwnerRequest);
 }

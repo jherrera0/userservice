@@ -1,7 +1,7 @@
 package com.backendchallenge.userservice.application.http.handler;
 
 import com.backendchallenge.userservice.application.http.dto.CreateOwnerRequest;
-import com.backendchallenge.userservice.application.http.mapper.ICreateOwnerRequestMapper;
+import com.backendchallenge.userservice.application.http.mapper.ICreateUserRequestMapper;
 import com.backendchallenge.userservice.domain.api.IUserServicePort;
 import com.backendchallenge.userservice.domain.model.User;
 import com.backendchallenge.userservice.domain.until.ConstTest;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 class UserHandlerTest {
 
     @Mock
-    private ICreateOwnerRequestMapper createOwnerRequestMapper;
+    private ICreateUserRequestMapper createOwnerRequestMapper;
 
     @Mock
     private IUserServicePort userServicePort;
