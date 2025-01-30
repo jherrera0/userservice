@@ -26,6 +26,7 @@ public class UserRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = ConstDocumentation.CODE_201, description = ConstDocumentation.CREATE_OWNER_CODE_201),
             @ApiResponse(responseCode = ConstDocumentation.CODE_400, description = ConstDocumentation.CREATE_OWNER_CODE_400),
+            @ApiResponse(responseCode = ConstDocumentation.CODE_403, description = ConstDocumentation.CREATE_OWNER_CODE_403),
     })
     @PreAuthorize(JwtConst.HAS_ROLE_ADMIN)
     @PostMapping(ConstRute.CREATE_OWNER_RUTE)
@@ -42,5 +43,18 @@ public class UserRestController {
     @GetMapping(ConstRute.FIND_OWNER_BY_ID_RUTE)
     public ResponseEntity<Boolean> findOwnerById(@RequestParam Long ownerId) {
         return ResponseEntity.ok(userHandler.findOwnerById(ownerId));
+    }
+
+    @Operation(summary = ConstDocumentation.CREATE_EMPLOYEE_OPERATION)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = ConstDocumentation.CODE_201, description = ConstDocumentation.CREATE_EMPLOYEE_CODE_201),
+            @ApiResponse(responseCode = ConstDocumentation.CODE_400, description = ConstDocumentation.CREATE_EMPLOYEE_CODE_400),
+            @ApiResponse(responseCode = ConstDocumentation.CODE_403, description = ConstDocumentation.CREATE_EMPLOYEE_CODE_403),
+    })
+    @PreAuthorize(JwtConst.HAS_ROLE_OWNER)
+    @PostMapping(ConstRute.CREATE_EMPLOYEE_RUTE)
+    public ResponseEntity<String> createEmployee(@Valid @RequestBody CreateOwnerRequest createOwnerRequest) {
+        userHandler.createEmployee(createOwnerRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

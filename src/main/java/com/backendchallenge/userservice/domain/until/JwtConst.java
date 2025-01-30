@@ -11,6 +11,7 @@ public class JwtConst {
     public static final String ROLE = "Role";
     public static final String PERMIT_ALL = "permitAll()";
     public static final String HAS_ROLE_ADMIN = "hasRole('ADMIN')";
+        public static final String HAS_ROLE_OWNER = "hasRole('OWNER')";
 
 
     private JwtConst() {

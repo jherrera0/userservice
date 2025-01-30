@@ -20,6 +20,12 @@ public class ConstDocumentation {
 
     public static final String AUTH_LOGIN_DESCRIPTION_201 = "User logged in successfully";
     public static final String AUTH_LOGIN_DESCRIPTION_403 = "Invalid credentials";
+    public static final String CREATE_EMPLOYEE_OPERATION = "Create a new employee user";
+    public static final String CREATE_EMPLOYEE_CODE_201 = "Employee user created successfully";
+    public static final String CREATE_EMPLOYEE_CODE_400 = "Invalid data to request create employee user";
+    public static final String CREATE_EMPLOYEE_CODE_403 = "User not authorized to create employee user";
+    public static final String CREATE_OWNER_CODE_403 = "User not authorized to create owner user";
+
 
     private ConstDocumentation() {
     }
