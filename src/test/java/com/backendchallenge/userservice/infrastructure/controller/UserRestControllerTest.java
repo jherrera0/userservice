@@ -162,4 +162,52 @@ class UserRestControllerTest {
             """))
                 .andExpect(status().isBadRequest());
     }
+    @Test
+    void createClient_withValidRequest_shouldReturnStatus201() throws Exception {
+        CreateUserRequest request = new CreateUserRequest(
+                ConstTest.EMAIL_VALID,
+                ConstTest.PASSWORD_VALID,
+                ConstTest.DOCUMENT_VALID,
+                ConstTest.PHONE_VALID,
+                ConstTest.BIRTHDATE_VALID,
+                ConstTest.NAME_VALID,
+                ConstTest.LAST_NAME_VALID
+        );
+
+        mockMvc.perform(post(ConstRute.USER_REST_RUTE + ConstRute.CREATE_CLIENT_RUTE)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+            {
+                "email": "%s",
+                "password": "%s",
+                "document": "%s",
+                "phone": "%s",
+                "birthdate": "%s",
+                "name": "%s",
+                "lastName": "%s"
+            }
+        """.formatted(ConstTest.EMAIL_VALID, ConstTest.PASSWORD_VALID, ConstTest.DOCUMENT_VALID, ConstTest.PHONE_VALID, ConstTest.BIRTHDATE_STRING_VALID, ConstTest.NAME_VALID, ConstTest.LAST_NAME_VALID)))
+                .andExpect(status().isCreated());
+
+        verify(userHandler).createClient(request);
+    }
+
+    @Test
+    void createClient_withInvalidRequest_shouldReturnStatus400() throws Exception {
+        mockMvc.perform(post(ConstRute.USER_REST_RUTE + ConstRute.CREATE_CLIENT_RUTE)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+            {
+                "email": "",
+                "password": "",
+                "document": "",
+                "phone": "",
+                "birthdate": "01/01/2020",
+                "name": "",
+                "lastName": ""
+            }
+        """))
+                .andExpect(status().isBadRequest());
+    }
+
 }
