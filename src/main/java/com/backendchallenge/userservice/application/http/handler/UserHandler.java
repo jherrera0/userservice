@@ -27,4 +27,9 @@ public class UserHandler implements IUserHandler {
     public Boolean findOwnerById(Long ownerId) {
         return userServicePort.findOwnerById(ownerId);
     }
+
+    @Override
+    public void createClient(CreateUserRequest createUserRequest) {
+        userServicePort.createClient(createUserRequestMapper.toUser(createUserRequest));
+    }
 }
