@@ -54,7 +54,7 @@ class UserCaseTest {
         user.setLastName(ConstTest.LAST_NAME_VALID);
         user.setDocument(ConstTest.DOCUMENT_VALID);
         user.setPhone(ConstTest.PHONE_VALID);
-        user.setBirthdate(LocalDate.of(2000, 1, 1));
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
@@ -81,7 +81,7 @@ class UserCaseTest {
         user.setLastName(ConstTest.LAST_NAME_VALID);
         user.setDocument(ConstTest.DOCUMENT_VALID);
         user.setPhone(ConstTest.PHONE_VALID);
-        user.setBirthdate(LocalDate.of(2000, 1, 1));
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
@@ -95,7 +95,7 @@ class UserCaseTest {
         user.setLastName(ConstTest.LAST_NAME_VALID);
         user.setDocument(ConstTest.DOCUMENT_VALID);
         user.setPhone(ConstTest.PHONE_VALID);
-        user.setBirthdate(LocalDate.of(2000, 1, 1));
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
         user.setEmail(ConstTest.INVALID_EMAIL_TEST);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
@@ -109,7 +109,7 @@ class UserCaseTest {
         user.setLastName(ConstTest.LAST_NAME_VALID);
         user.setDocument(ConstTest.DOCUMENT_VALID);
         user.setPhone(ConstTest.INVALID_PHONE_TEST);
-        user.setBirthdate(LocalDate.of(2000, 1, 1));
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
@@ -123,7 +123,7 @@ class UserCaseTest {
         user.setLastName(ConstTest.LAST_NAME_VALID);
         user.setDocument(ConstTest.INVALID_DOCUMENT_TEST);
         user.setPhone(ConstTest.PHONE_VALID);
-        user.setBirthdate(LocalDate.of(2000, 1, 1));
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
@@ -137,7 +137,7 @@ class UserCaseTest {
         user.setLastName(ConstTest.EMPTY_STRING);
         user.setDocument(ConstTest.DOCUMENT_VALID);
         user.setPhone(ConstTest.PHONE_VALID);
-        user.setBirthdate(LocalDate.of(2000, 1, 1));
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
@@ -151,7 +151,7 @@ class UserCaseTest {
         user.setLastName(ConstTest.LAST_NAME_VALID);
         user.setDocument(ConstTest.EMPTY_STRING);
         user.setPhone(ConstTest.PHONE_VALID);
-        user.setBirthdate(LocalDate.of(2000, 1, 1));
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
@@ -165,7 +165,7 @@ class UserCaseTest {
         user.setLastName(ConstTest.LAST_NAME_VALID);
         user.setDocument(ConstTest.DOCUMENT_VALID);
         user.setPhone(ConstTest.EMPTY_STRING);
-        user.setBirthdate(LocalDate.of(2000, 1, 1));
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
@@ -193,7 +193,7 @@ class UserCaseTest {
         user.setLastName(ConstTest.LAST_NAME_VALID);
         user.setDocument(ConstTest.DOCUMENT_VALID);
         user.setPhone(ConstTest.PHONE_VALID);
-        user.setBirthdate(LocalDate.of(2000, 1, 1));
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
         user.setEmail(ConstTest.EMPTY_STRING);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
@@ -207,7 +207,7 @@ class UserCaseTest {
         user.setLastName(ConstTest.LAST_NAME_VALID);
         user.setDocument(ConstTest.DOCUMENT_VALID);
         user.setPhone(ConstTest.PHONE_VALID);
-        user.setBirthdate(LocalDate.of(2000, 1, 1));
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.EMPTY_STRING);
 
@@ -437,5 +437,185 @@ class UserCaseTest {
         user.setPassword(ConstTest.PASSWORD_VALID);
 
         assertThrows(UserOlderThatTheValidAgeException.class, () -> userCase.createEmployee(user));
+    }
+    @Test
+    void createClient_withValidUser_shouldCreateClient() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        Role role = new Role(ConstTest.ID_TEST, ConstRole.CLIENT);
+
+        when(roleServicePort.getRoleByName(ConstRole.CLIENT)).thenReturn(role);
+        when(encoderPersistencePort.encode(user.getPassword())).thenReturn(ConstTest.ENCODED_PASSWORD_TEST);
+
+        userCase.createClient(user);
+
+        assertEquals(ConstTest.ENCODED_PASSWORD_TEST, user.getPassword());
+        verify(userPersistencePort, times(1)).saveUserWithRole(user, role);
+    }
+
+    @Test
+    void createClient_withNullUser_shouldThrowException() {
+        assertThrows(EmptyUserNameException.class, () -> userCase.createClient(null));
+    }
+
+    @Test
+    void createClient_withEmptyUserName_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.EMPTY_STRING);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(EmptyUserNameException.class, () -> userCase.createClient(user));
+    }
+
+    @Test
+    void createClient_withInvalidEmailFormat_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.INVALID_EMAIL_TEST);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(InvalidUserEmailFormatException.class, () -> userCase.createClient(user));
+    }
+
+    @Test
+    void createClient_withInvalidPhoneFormat_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.INVALID_PHONE_TEST);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(InvalidUserPhoneFormatException.class, () -> userCase.createClient(user));
+    }
+
+    @Test
+    void createClient_withInvalidDocumentFormat_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.INVALID_DOCUMENT_TEST);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(InvalidUserDocumentFormatException.class, () -> userCase.createClient(user));
+    }
+
+    @Test
+    void createClient_withEmptyLastName_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.EMPTY_STRING);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(EmptyUserLastNameException.class, () -> userCase.createClient(user));
+    }
+
+    @Test
+    void createClient_withBlankDocument_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.EMPTY_STRING);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(EmptyUserDocumentException.class, () -> userCase.createClient(user));
+    }
+
+    @Test
+    void createClient_withBlankPhone_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.EMPTY_STRING);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(EmptyUserPhoneException.class, () -> userCase.createClient(user));
+    }
+
+    @Test
+    void createClient_withNullBirthdate_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(null);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(EmptyUserBirthdateException.class, () -> userCase.createClient(user));
+    }
+
+    @Test
+    void createClient_withBlankEmail_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMPTY_STRING);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(EmptyUserEmailException.class, () -> userCase.createClient(user));
+    }
+
+    @Test
+    void createClient_withBlankPassword_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.EMPTY_STRING);
+
+        assertThrows(EmptyUserPasswordException.class, () -> userCase.createClient(user));
+    }
+
+    @Test
+    void createClient_withUserOlderThanValidAge_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(LocalDate.now().minusYears(ConstValidation.MIN_AGE - 1));
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        assertThrows(UserOlderThatTheValidAgeException.class, () -> userCase.createClient(user));
     }
 }

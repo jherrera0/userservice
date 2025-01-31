@@ -57,4 +57,17 @@ public class UserRestController {
         userHandler.createEmployee(createUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @Operation(summary = ConstDocumentation.CREATE_CLIENT_OPERATION)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = ConstDocumentation.CODE_201, description = ConstDocumentation.CREATE_CLIENT_CODE_201),
+            @ApiResponse(responseCode = ConstDocumentation.CODE_400, description = ConstDocumentation.CREATE_CLIENT_CODE_400),
+            @ApiResponse(responseCode = ConstDocumentation.CODE_403, description = ConstDocumentation.CREATE_CLIENT_CODE_403),
+    })
+    @PreAuthorize(JwtConst.PERMIT_ALL)
+    @PostMapping(ConstRute.CREATE_CLIENT_RUTE)
+    public ResponseEntity<String> createClient(@Valid @RequestBody CreateUserRequest createUserRequest) {
+        userHandler.createClient(createUserRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 }
