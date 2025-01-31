@@ -7,6 +7,7 @@ public class ConstRute {
     public static final String AUTH = "/auth";
     public static final String LOGIN = "/login";
     public static final String CREATE_EMPLOYEE_RUTE = "/CreateEmployee";
+    public static final String CREATE_CLIENT_RUTE = "/CreateClient";
 
     private ConstRute() {
     }
