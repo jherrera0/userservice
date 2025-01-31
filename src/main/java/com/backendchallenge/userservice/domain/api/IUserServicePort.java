@@ -6,4 +6,5 @@ public interface IUserServicePort {
     void createEmployee(User user);
     void createOwner(User user);
     Boolean findOwnerById(Long ownerId);
+    void createClient(User user);
 }

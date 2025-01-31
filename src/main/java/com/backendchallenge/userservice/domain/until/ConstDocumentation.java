@@ -25,6 +25,10 @@ public class ConstDocumentation {
     public static final String CREATE_EMPLOYEE_CODE_400 = "Invalid data to request create employee user";
     public static final String CREATE_EMPLOYEE_CODE_403 = "User not authorized to create employee user";
     public static final String CREATE_OWNER_CODE_403 = "User not authorized to create owner user";
+    public static final String CREATE_CLIENT_OPERATION = "Create a new client user";
+    public static final String CREATE_CLIENT_CODE_201 = "Client user created successfully";
+    public static final String CREATE_CLIENT_CODE_400 = "Invalid data to request create client user";
+    public static final String CREATE_CLIENT_CODE_403 = "User not authorized to create client user";
 
 
     private ConstDocumentation() {
