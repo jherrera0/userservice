@@ -39,7 +39,7 @@ public class UserRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = ConstDocumentation.CODE_201, description = ConstDocumentation.FIND_OWNER_CODE_201),
     })
-    @PreAuthorize(JwtConst.HAS_ROLE_ADMIN)
+    @PreAuthorize(JwtConst.PERMIT_ALL)
     @GetMapping(ConstRute.FIND_OWNER_BY_ID_RUTE)
     public ResponseEntity<Boolean> findOwnerById(@RequestParam Long ownerId) {
         return ResponseEntity.ok(userHandler.findOwnerById(ownerId));
