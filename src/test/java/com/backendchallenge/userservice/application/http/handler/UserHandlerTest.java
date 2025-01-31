@@ -101,4 +101,24 @@ class UserHandlerTest {
         verify(createOwnerRequestMapper, times(1)).toUser(request);
         verify(userServicePort, times(1)).createEmployee(mockedUser);
     }
+    @Test
+    void createClient_ValidRequest_CallsServiceLayer() {
+        CreateUserRequest request = new CreateUserRequest();
+        request.setEmail(ConstTest.EMAIL_VALID);
+        request.setPassword(ConstTest.PASSWORD_VALID);
+        request.setDocument(ConstTest.DOCUMENT_VALID);
+        request.setPhone(ConstTest.PHONE_VALID);
+        request.setBirthdate(LocalDate.of(2000, 1, 1));
+        request.setName(ConstTest.NAME_VALID);
+        request.setLastName(ConstTest.LAST_NAME_VALID);
+
+        User mockedUser = new User();
+        when(createOwnerRequestMapper.toUser(request)).thenReturn(mockedUser);
+
+        userHandler.createClient(request);
+
+        verify(createOwnerRequestMapper, times(1)).toUser(request);
+        verify(userServicePort, times(1)).createClient(mockedUser);
+    }
+
 }
