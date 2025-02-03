@@ -28,4 +28,14 @@ public class UserJpaAdapter implements IUserPersistencePort {
     public Boolean existsUserWithRole(Long userId, Role role) {
         return userRepository.findByIdAndRole(userId, roleEntityMapper.toEntity(role));
     }
+
+    @Override
+    public Long findUserIdByEmail(String email) {
+        return userRepository.findByEmail(email).getId();
+    }
+
+    @Override
+    public boolean existsUserIdByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
 }

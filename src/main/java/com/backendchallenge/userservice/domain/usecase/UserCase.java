@@ -6,6 +6,7 @@ import com.backendchallenge.userservice.domain.exception.userexceptions.*;
 import com.backendchallenge.userservice.domain.model.Role;
 import com.backendchallenge.userservice.domain.model.User;
 import com.backendchallenge.userservice.domain.spi.IEncoderPersistencePort;
+import com.backendchallenge.userservice.domain.spi.IRestaurantPersistentPort;
 import com.backendchallenge.userservice.domain.spi.IUserPersistencePort;
 import com.backendchallenge.userservice.domain.until.ConstRole;
 import com.backendchallenge.userservice.domain.until.ConstValidation;
@@ -16,13 +17,16 @@ public class UserCase implements IUserServicePort {
     private final IRoleServicePort roleServicePort;
     private final IUserPersistencePort userPersistencePort;
     private final IEncoderPersistencePort encoderPersistencePort;
+    private final IRestaurantPersistentPort restaurantPersistentPort;
 
     public UserCase(IRoleServicePort roleServicePort,
                     IUserPersistencePort userPersistencePort,
-                    IEncoderPersistencePort encoderPersistencePort) {
+                    IEncoderPersistencePort encoderPersistencePort,
+                    IRestaurantPersistentPort restaurantPersistentPort) {
         this.roleServicePort = roleServicePort;
         this.userPersistencePort = userPersistencePort;
         this.encoderPersistencePort = encoderPersistencePort;
+        this.restaurantPersistentPort = restaurantPersistentPort;
     }
 
     void saveUserWithRole(User user, Role role) {
@@ -30,11 +34,15 @@ public class UserCase implements IUserServicePort {
     }
 
     @Override
-    public void createEmployee(User user) {
+    public void createEmployee(User user,Long restaurantId) {
         validateOfUserParams(user);
         Role role = roleServicePort.getRoleByName(ConstRole.EMPLOYEE);
         user.setPassword(encoderPersistencePort.encode(user.getPassword()));
+        if(userPersistencePort.existsUserIdByEmail(user.getEmail())){
+            throw new UserAlreadyExistsException();
+        }
         saveUserWithRole(user, role);
+        restaurantPersistentPort.createEmployee(userPersistencePort.findUserIdByEmail(user.getEmail()), restaurantId);
     }
 
     @Override

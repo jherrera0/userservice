@@ -22,6 +22,7 @@ public class ConstExceptions {
     public static final String TOKEN_UNSUPPORTED = "Token is unsupported";
     public static final String TOKEN_EXPIRED = "Token is expired";
     public static final String USER_NOT_FOUND = "User not found";
+    public static final String USER_ALREADY_EXISTS = "User already exists";
 
 
     private ConstExceptions() {
