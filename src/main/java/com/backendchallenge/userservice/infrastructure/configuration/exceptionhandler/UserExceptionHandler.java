@@ -9,6 +9,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @RestControllerAdvice
 public class UserExceptionHandler extends ResponseEntityExceptionHandler {
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<Object> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
     @ExceptionHandler(EmptyUserNameException.class)
     public ResponseEntity<Object> handleEmptyUserNameException(EmptyUserNameException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());

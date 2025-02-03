@@ -46,6 +46,10 @@ public class ConstTest {
     public static final String ERROR2 = "error2";
     public static final Integer AUTHORITIES_SIZE = 1;
 
+    public static final Long USER_ID = 1L;
+    public static final Long RESTAURANT_ID = 2L;
+
+
     private ConstTest() {
     }
 }

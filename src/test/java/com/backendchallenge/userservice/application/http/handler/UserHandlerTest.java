@@ -96,10 +96,10 @@ class UserHandlerTest {
         User mockedUser = new User();
         when(createOwnerRequestMapper.toUser(request)).thenReturn(mockedUser);
 
-        userHandler.createEmployee(request);
+        userHandler.createEmployee(request, ConstTest.ID_TEST,ConstTest.VALID_TOKEN);
 
         verify(createOwnerRequestMapper, times(1)).toUser(request);
-        verify(userServicePort, times(1)).createEmployee(mockedUser);
+        verify(userServicePort, times(1)).createEmployee(mockedUser, ConstTest.ID_TEST);
     }
     @Test
     void createClient_ValidRequest_CallsServiceLayer() {

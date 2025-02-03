@@ -3,10 +3,7 @@ package com.backendchallenge.userservice.infrastructure.configuration.security.f
 import com.backendchallenge.userservice.application.jpa.entity.UserEntity;
 import com.backendchallenge.userservice.application.jpa.repository.IUserRepository;
 import com.backendchallenge.userservice.application.jwt.JwtService;
-import com.backendchallenge.userservice.domain.until.ConstExceptions;
-import com.backendchallenge.userservice.domain.until.ConstRute;
-import com.backendchallenge.userservice.domain.until.ConstValidation;
-import com.backendchallenge.userservice.domain.until.JwtConst;
+import com.backendchallenge.userservice.domain.until.*;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
@@ -60,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             UserDetails userDetails = user;
             UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    new UsernamePasswordAuthenticationToken(userDetails, ConstTest.EMPTY_STRING, userDetails.getAuthorities());
 
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 

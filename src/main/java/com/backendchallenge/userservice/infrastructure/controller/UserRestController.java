@@ -53,8 +53,10 @@ public class UserRestController {
     })
     @PreAuthorize(JwtConst.HAS_ROLE_OWNER)
     @PostMapping(ConstRute.CREATE_EMPLOYEE_RUTE)
-    public ResponseEntity<String> createEmployee(@Valid @RequestBody CreateUserRequest createUserRequest) {
-        userHandler.createEmployee(createUserRequest);
+    public ResponseEntity<String> createEmployee(@Valid @RequestBody CreateUserRequest createUserRequest,
+                                                 @RequestParam Long restaurantId,
+                                                 @RequestHeader(JwtConst.HEADER_STRING) String token) {
+        userHandler.createEmployee(createUserRequest, restaurantId,token);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

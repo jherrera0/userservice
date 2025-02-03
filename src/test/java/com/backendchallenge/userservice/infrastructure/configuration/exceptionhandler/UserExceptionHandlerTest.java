@@ -115,4 +115,11 @@ class UserExceptionHandlerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals(ConstExceptions.USER_PHONE_INVALID_FORMAT, response.getBody());
     }
+    @Test
+    void handleUserAlreadyExistsException_shouldReturnBadRequest() {
+        UserAlreadyExistsException ex = new UserAlreadyExistsException();
+        ResponseEntity<Object> response = handler.handleUserAlreadyExistsException(ex);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(ConstExceptions.USER_ALREADY_EXISTS, response.getBody());
+    }
 }

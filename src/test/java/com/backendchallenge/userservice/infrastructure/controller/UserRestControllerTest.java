@@ -4,6 +4,7 @@ import com.backendchallenge.userservice.application.http.dto.CreateUserRequest;
 import com.backendchallenge.userservice.application.http.handler.interfaces.IUserHandler;
 import com.backendchallenge.userservice.domain.until.ConstRute;
 import com.backendchallenge.userservice.domain.until.ConstTest;
+import com.backendchallenge.userservice.domain.until.JwtConst;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -114,7 +115,6 @@ class UserRestControllerTest {
 
         verify(userHandler).findOwnerById(ownerId);
     }
-
     @Test
     void createEmployee_withValidRequest_shouldReturnStatus201() throws Exception {
         CreateUserRequest request = new CreateUserRequest(
@@ -128,21 +128,24 @@ class UserRestControllerTest {
         );
 
         mockMvc.perform(post(ConstRute.USER_REST_RUTE + ConstRute.CREATE_EMPLOYEE_RUTE)
+                        .param("restaurantId", ConstTest.ID_TEST.toString())
+                        .header(JwtConst.HEADER_STRING, JwtConst.BEARER + JwtConst.SPLITERSTRING +
+                                ConstTest.VALID_TOKEN)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                {
-                    "email": "%s",
-                    "password": "%s",
-                    "document": "%s",
-                    "phone": "%s",
-                    "birthdate": "%s",
-                    "name": "%s",
-                    "lastName": "%s"
-                }
-            """.formatted(ConstTest.EMAIL_VALID, ConstTest.PASSWORD_VALID, ConstTest.DOCUMENT_VALID, ConstTest.PHONE_VALID, ConstTest.BIRTHDATE_STRING_VALID, ConstTest.NAME_VALID, ConstTest.LAST_NAME_VALID)))
+            {
+                "email": "%s",
+                "password": "%s",
+                "document": "%s",
+                "phone": "%s",
+                "birthdate": "%s",
+                "name": "%s",
+                "lastName": "%s"
+            }
+        """.formatted(ConstTest.EMAIL_VALID, ConstTest.PASSWORD_VALID, ConstTest.DOCUMENT_VALID, ConstTest.PHONE_VALID, ConstTest.BIRTHDATE_STRING_VALID, ConstTest.NAME_VALID, ConstTest.LAST_NAME_VALID)))
                 .andExpect(status().isCreated());
 
-        verify(userHandler).createEmployee(request);
+        verify(userHandler).createEmployee(request, ConstTest.ID_TEST, JwtConst.BEARER + JwtConst.SPLITERSTRING + ConstTest.VALID_TOKEN);
     }
 
     @Test

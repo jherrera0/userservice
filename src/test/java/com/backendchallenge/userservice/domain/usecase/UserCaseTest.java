@@ -5,6 +5,7 @@ import com.backendchallenge.userservice.domain.exception.userexceptions.*;
 import com.backendchallenge.userservice.domain.model.Role;
 import com.backendchallenge.userservice.domain.model.User;
 import com.backendchallenge.userservice.domain.spi.IEncoderPersistencePort;
+import com.backendchallenge.userservice.domain.spi.IRestaurantPersistentPort;
 import com.backendchallenge.userservice.domain.spi.IUserPersistencePort;
 import com.backendchallenge.userservice.domain.until.ConstRole;
 import com.backendchallenge.userservice.domain.until.ConstTest;
@@ -31,6 +32,9 @@ class UserCaseTest {
 
     @Mock
     private IEncoderPersistencePort encoderPersistencePort;
+
+    @Mock
+    private IRestaurantPersistentPort restaurantPersistentPort;
 
     @InjectMocks
     private UserCase userCase;
@@ -270,11 +274,11 @@ class UserCaseTest {
         user.setPassword(ConstTest.PASSWORD_VALID);
 
         Role role = new Role(ConstTest.ID_TEST, ConstRole.EMPLOYEE);
-
+        doNothing().when(restaurantPersistentPort).createEmployee(ConstTest.ID_TEST, ConstTest.ID_TEST);
         when(roleServicePort.getRoleByName(ConstRole.EMPLOYEE)).thenReturn(role);
         when(encoderPersistencePort.encode(user.getPassword())).thenReturn(ConstTest.ENCODED_PASSWORD_TEST);
 
-        userCase.createEmployee(user);
+        userCase.createEmployee(user, ConstTest.ID_TEST);
 
         assertEquals(ConstTest.ENCODED_PASSWORD_TEST, user.getPassword());
         verify(userPersistencePort, times(1)).saveUserWithRole(user, role);
@@ -282,7 +286,7 @@ class UserCaseTest {
 
     @Test
     void createEmployee_withNullUser_shouldThrowException() {
-        assertThrows(EmptyUserNameException.class, () -> userCase.createEmployee(null));
+        assertThrows(EmptyUserNameException.class, () -> userCase.createEmployee(null, ConstTest.ID_TEST));
     }
 
     @Test
@@ -296,7 +300,7 @@ class UserCaseTest {
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
-        assertThrows(EmptyUserNameException.class, () -> userCase.createEmployee(user));
+        assertThrows(EmptyUserNameException.class, () -> userCase.createEmployee(user, ConstTest.ID_TEST));
     }
 
     @Test
@@ -310,7 +314,7 @@ class UserCaseTest {
         user.setEmail(ConstTest.INVALID_EMAIL_TEST);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
-        assertThrows(InvalidUserEmailFormatException.class, () -> userCase.createEmployee(user));
+        assertThrows(InvalidUserEmailFormatException.class, () -> userCase.createEmployee(user, ConstTest.ID_TEST));
     }
 
     @Test
@@ -324,7 +328,7 @@ class UserCaseTest {
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
-        assertThrows(InvalidUserPhoneFormatException.class, () -> userCase.createEmployee(user));
+        assertThrows(InvalidUserPhoneFormatException.class, () -> userCase.createEmployee(user, ConstTest.ID_TEST));
     }
 
     @Test
@@ -338,7 +342,7 @@ class UserCaseTest {
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
-        assertThrows(InvalidUserDocumentFormatException.class, () -> userCase.createEmployee(user));
+        assertThrows(InvalidUserDocumentFormatException.class, () -> userCase.createEmployee(user, ConstTest.ID_TEST));
     }
 
     @Test
@@ -352,7 +356,7 @@ class UserCaseTest {
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
-        assertThrows(EmptyUserLastNameException.class, () -> userCase.createEmployee(user));
+        assertThrows(EmptyUserLastNameException.class, () -> userCase.createEmployee(user, ConstTest.ID_TEST));
     }
 
     @Test
@@ -366,7 +370,7 @@ class UserCaseTest {
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
-        assertThrows(EmptyUserDocumentException.class, () -> userCase.createEmployee(user));
+        assertThrows(EmptyUserDocumentException.class, () -> userCase.createEmployee(user, ConstTest.ID_TEST));
     }
 
     @Test
@@ -380,7 +384,7 @@ class UserCaseTest {
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
-        assertThrows(EmptyUserPhoneException.class, () -> userCase.createEmployee(user));
+        assertThrows(EmptyUserPhoneException.class, () -> userCase.createEmployee(user, ConstTest.ID_TEST));
     }
 
     @Test
@@ -394,7 +398,7 @@ class UserCaseTest {
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
-        assertThrows(EmptyUserBirthdateException.class, () -> userCase.createEmployee(user));
+        assertThrows(EmptyUserBirthdateException.class, () -> userCase.createEmployee(user, ConstTest.ID_TEST));
     }
 
     @Test
@@ -408,7 +412,7 @@ class UserCaseTest {
         user.setEmail(ConstTest.EMPTY_STRING);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
-        assertThrows(EmptyUserEmailException.class, () -> userCase.createEmployee(user));
+        assertThrows(EmptyUserEmailException.class, () -> userCase.createEmployee(user, ConstTest.ID_TEST));
     }
 
     @Test
@@ -422,7 +426,7 @@ class UserCaseTest {
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.EMPTY_STRING);
 
-        assertThrows(EmptyUserPasswordException.class, () -> userCase.createEmployee(user));
+        assertThrows(EmptyUserPasswordException.class, () -> userCase.createEmployee(user, ConstTest.ID_TEST));
     }
 
     @Test
@@ -436,7 +440,22 @@ class UserCaseTest {
         user.setEmail(ConstTest.EMAIL_VALID);
         user.setPassword(ConstTest.PASSWORD_VALID);
 
-        assertThrows(UserOlderThatTheValidAgeException.class, () -> userCase.createEmployee(user));
+        assertThrows(UserOlderThatTheValidAgeException.class, () -> userCase.createEmployee(user, ConstTest.ID_TEST));
+    }
+    @Test
+    void createEmployee_withExistingEmail_shouldThrowException() {
+        User user = new User();
+        user.setName(ConstTest.NAME_VALID);
+        user.setLastName(ConstTest.LAST_NAME_VALID);
+        user.setDocument(ConstTest.DOCUMENT_VALID);
+        user.setPhone(ConstTest.PHONE_VALID);
+        user.setBirthdate(ConstTest.BIRTHDATE_VALID);
+        user.setEmail(ConstTest.EMAIL_VALID);
+        user.setPassword(ConstTest.PASSWORD_VALID);
+
+        when(userPersistencePort.existsUserIdByEmail(user.getEmail())).thenReturn(true);
+
+        assertThrows(UserAlreadyExistsException.class, () -> userCase.createEmployee(user, ConstTest.ID_TEST));
     }
     @Test
     void createClient_withValidUser_shouldCreateClient() {
