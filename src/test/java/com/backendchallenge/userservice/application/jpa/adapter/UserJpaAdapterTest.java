@@ -15,8 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UserJpaAdapterTest {
@@ -87,5 +86,49 @@ class UserJpaAdapterTest {
         Boolean result = userJpaAdapter.existsUserWithRole(userId, role);
 
         assertFalse(result);
+    }
+
+    @Test
+    void findUserIdByEmail_withExistingEmail_shouldReturnUserId() {
+        String email = ConstTest.EMAIL_VALID;
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(ConstTest.ID_TEST);
+
+        when(userRepository.findByEmail(email)).thenReturn(userEntity);
+
+        Long userId = userJpaAdapter.findUserIdByEmail(email);
+
+        assertEquals(ConstTest.ID_TEST, userId);
+    }
+
+    @Test
+    void findUserIdByEmail_withNonExistingEmail_shouldThrowException() {
+        String email = ConstTest.EMAIL_VALID;
+
+        when(userRepository.findByEmail(email)).thenReturn(null);
+
+        assertThrows(NullPointerException.class, () -> userJpaAdapter.findUserIdByEmail(email));
+    }
+
+    @Test
+    void existsUserIdByEmail_withExistingEmail_shouldReturnTrue() {
+        String email = ConstTest.EMAIL_VALID;
+
+        when(userRepository.existsByEmail(email)).thenReturn(true);
+
+        boolean exists = userJpaAdapter.existsUserIdByEmail(email);
+
+        assertTrue(exists);
+    }
+
+    @Test
+    void existsUserIdByEmail_withNonExistingEmail_shouldReturnFalse() {
+        String email = ConstTest.EMAIL_VALID;
+
+        when(userRepository.existsByEmail(email)).thenReturn(false);
+
+        boolean exists = userJpaAdapter.existsUserIdByEmail(email);
+
+        assertFalse(exists);
     }
 }
