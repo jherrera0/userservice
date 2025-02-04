@@ -6,7 +6,6 @@ import com.backendchallenge.userservice.application.http.mapper.ICreateUserReque
 import com.backendchallenge.userservice.domain.api.IUserServicePort;
 import com.backendchallenge.userservice.domain.until.TokenHolder;
 import lombok.AllArgsConstructor;
-import org.aspectj.weaver.patterns.IToken;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,7 +36,7 @@ public class UserHandler implements IUserHandler {
     }
 
     @Override
-    public void getPhone(Long userId) {
-        userServicePort.getPhoneById(userId);
+    public String getPhone(Long userId) {
+       return userServicePort.getPhoneById(userId);
     }
 }

@@ -72,4 +72,16 @@ public class UserRestController {
         userHandler.createClient(createUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @Operation(summary = ConstDocumentation.GET_USER_PHONE_OPERATION)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = ConstDocumentation.CODE_201, description = ConstDocumentation.GET_USER_PHONE_CODE_201),
+            @ApiResponse(responseCode = ConstDocumentation.CODE_400, description = ConstDocumentation.GET_USER_PHONE_CODE_400),
+            @ApiResponse(responseCode = ConstDocumentation.CODE_403, description = ConstDocumentation.GET_USER_PHONE_CODE_403),
+    })
+    @PreAuthorize(JwtConst.HAS_ROLE_EMPLOYEE)
+    @GetMapping(ConstRute.GET_USER_PHONE_RUTE)
+    public ResponseEntity<String> getPhone(@RequestParam Long userId) {
+        return ResponseEntity.ok(userHandler.getPhone(userId));
+    }
 }

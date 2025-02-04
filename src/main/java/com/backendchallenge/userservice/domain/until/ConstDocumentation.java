@@ -33,6 +33,10 @@ public class ConstDocumentation {
     public static final String CREATE_CLIENT_CODE_201 = "Client user created successfully";
     public static final String CREATE_CLIENT_CODE_400 = "Invalid data to request create client user";
     public static final String CREATE_CLIENT_CODE_403 = "User not authorized to create client user";
+    public static final String GET_USER_PHONE_OPERATION = "Get user phone";
+    public static final String GET_USER_PHONE_CODE_201 = "User phone found process did successfully";
+    public static final String GET_USER_PHONE_CODE_400 = "Invalid data to request get user phone";
+    public static final String GET_USER_PHONE_CODE_403 = "User not authorized to get user phone";
 
 
     private ConstDocumentation() {
