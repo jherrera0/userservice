@@ -28,7 +28,13 @@ class UserExceptionHandlerTest {
     void tearDown() throws Exception {
         closeable.close();
     }
-
+    @Test
+    void handleUserNotFoundException_shouldReturnNotFound() {
+        UserNotFoundException ex = new UserNotFoundException();
+        ResponseEntity<Object> response = handler.handleUserNotFoundException(ex);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(ex.getMessage(), response.getBody());
+    }
     @Test
     void handleEmptyUserNameException_shouldReturnBadRequest() {
         EmptyUserNameException ex = new EmptyUserNameException();

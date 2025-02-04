@@ -212,5 +212,16 @@ class UserRestControllerTest {
         """))
                 .andExpect(status().isBadRequest());
     }
+    @Test
+    void getPhone_withValidUserId_shouldReturnStatus200() throws Exception {
+        Long userId = ConstTest.ID_TEST;
 
+        when(userHandler.getPhone(userId)).thenReturn(ConstTest.PHONE_VALID);
+
+        mockMvc.perform(get(ConstRute.USER_REST_RUTE + ConstRute.GET_USER_PHONE_RUTE)
+                        .param("userId", userId.toString()))
+                .andExpect(status().isOk());
+
+        verify(userHandler).getPhone(userId);
+    }
 }
