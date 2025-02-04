@@ -15,6 +15,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -130,5 +132,28 @@ class UserJpaAdapterTest {
         boolean exists = userJpaAdapter.existsUserIdByEmail(email);
 
         assertFalse(exists);
+    }
+    @Test
+    void getPhone_withExistingUserId_shouldReturnPhoneNumber() {
+        Long userId = ConstTest.ID_TEST;
+        String expectedPhone = ConstTest.PHONE_VALID;
+        UserEntity userEntity = new UserEntity();
+        userEntity.setPhone(expectedPhone);
+
+        when(userRepository.findById(userId)).thenReturn(Optional.of(userEntity));
+
+        String phone = userJpaAdapter.getPhone(userId);
+
+        assertEquals(expectedPhone, phone);
+    }
+    @Test
+    void existsUserId_withExistingUserId_shouldReturnTrue() {
+        Long userId = ConstTest.ID_TEST;
+
+        when(userRepository.findById(userId)).thenReturn(Optional.of(new UserEntity()));
+
+        boolean exists = userJpaAdapter.existsUserId(userId);
+
+        assertTrue(exists);
     }
 }
