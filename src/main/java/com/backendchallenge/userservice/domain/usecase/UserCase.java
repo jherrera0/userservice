@@ -67,6 +67,14 @@ public class UserCase implements IUserServicePort {
         saveUserWithRole(user, role);
     }
 
+    @Override
+    public String getPhoneById(Long userId) {
+        if (!userPersistencePort.existsUserId(userId)) {
+            throw new UserNotFoundException();
+        }
+        return userPersistencePort.getPhone(userId);
+    }
+
     private static void userOlderThatValidAge(LocalDate birthdate) {
         if (birthdate.isAfter(LocalDate.now().minusYears(ConstValidation.MIN_AGE))) {
             throw new UserOlderThatTheValidAgeException();
