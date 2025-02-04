@@ -38,4 +38,14 @@ public class UserJpaAdapter implements IUserPersistencePort {
     public boolean existsUserIdByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
+
+    @Override
+    public boolean existsUserId(Long userId) {
+        return userRepository.findById(userId).isPresent();
+    }
+
+    @Override
+    public String getPhone(Long userId) {
+        return userRepository.findById(userId).orElse(new UserEntity()).getPhone();
+    }
 }
