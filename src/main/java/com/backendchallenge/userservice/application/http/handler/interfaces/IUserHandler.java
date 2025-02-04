@@ -8,4 +8,5 @@ public interface IUserHandler {
     void createEmployee(CreateUserRequest request,Long restaurantId, String token);
     Boolean findOwnerById(Long ownerId);
     void createClient(@Valid CreateUserRequest createUserRequest);
+    String getPhone(Long userId);
 }

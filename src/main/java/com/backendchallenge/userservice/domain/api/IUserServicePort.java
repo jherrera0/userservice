@@ -7,4 +7,5 @@ public interface IUserServicePort {
     void createOwner(User user);
     Boolean findOwnerById(Long ownerId);
     void createClient(User user);
+    String getPhoneById(Long userId);
 }

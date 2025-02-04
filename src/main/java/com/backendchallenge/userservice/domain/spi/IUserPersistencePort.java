@@ -8,4 +8,7 @@ public interface IUserPersistencePort {
     Boolean existsUserWithRole(Long userId, Role role);
     Long findUserIdByEmail(String email);
     boolean existsUserIdByEmail(String email);
+
+    boolean existsUserId(Long userId);
+    String getPhone(Long userId);
 }

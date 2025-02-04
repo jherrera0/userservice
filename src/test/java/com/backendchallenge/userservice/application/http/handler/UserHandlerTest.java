@@ -14,8 +14,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UserHandlerTest {
@@ -120,5 +119,16 @@ class UserHandlerTest {
         verify(createOwnerRequestMapper, times(1)).toUser(request);
         verify(userServicePort, times(1)).createClient(mockedUser);
     }
+    @Test
+    void getPhone_ValidUserId_ReturnsPhoneNumber() {
+        Long userId = ConstTest.ID_TEST;
+        String expectedPhone = ConstTest.PHONE_VALID;
 
+        when(userServicePort.getPhoneById(userId)).thenReturn(expectedPhone);
+
+        String phone = userHandler.getPhone(userId);
+
+        assertEquals(expectedPhone, phone);
+        verify(userServicePort, times(1)).getPhoneById(userId);
+    }
 }

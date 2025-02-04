@@ -8,6 +8,7 @@ public class ConstRute {
     public static final String LOGIN = "/login";
     public static final String CREATE_EMPLOYEE_RUTE = "/CreateEmployee";
     public static final String CREATE_CLIENT_RUTE = "/CreateClient";
+    public static final String GET_USER_PHONE_RUTE = "/GetClientPhoneById";
 
     private ConstRute() {
     }

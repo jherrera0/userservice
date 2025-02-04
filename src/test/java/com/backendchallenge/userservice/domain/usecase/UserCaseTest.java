@@ -637,4 +637,24 @@ class UserCaseTest {
 
         assertThrows(UserOlderThatTheValidAgeException.class, () -> userCase.createClient(user));
     }
+    @Test
+    void getPhoneById_withExistingUserId_shouldReturnPhoneNumber() {
+        Long userId = ConstTest.ID_TEST;
+        String expectedPhone = ConstTest.PHONE_VALID;
+
+        when(userPersistencePort.existsUserId(userId)).thenReturn(true);
+        when(userPersistencePort.getPhone(userId)).thenReturn(expectedPhone);
+
+        String phone = userCase.getPhoneById(userId);
+
+        assertEquals(expectedPhone, phone);
+    }
+    @Test
+    void getPhoneById_withNonExistingUserId_shouldThrowException() {
+        Long userId = ConstTest.ID_TEST;
+
+        when(userPersistencePort.existsUserId(userId)).thenReturn(false);
+
+        assertThrows(UserNotFoundException.class, () -> userCase.getPhoneById(userId));
+    }
 }
