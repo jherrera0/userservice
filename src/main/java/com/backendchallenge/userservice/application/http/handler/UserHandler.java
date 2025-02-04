@@ -35,4 +35,9 @@ public class UserHandler implements IUserHandler {
     public void createClient(CreateUserRequest createUserRequest) {
         userServicePort.createClient(createUserRequestMapper.toUser(createUserRequest));
     }
+
+    @Override
+    public void getPhone(Long userId) {
+        userServicePort.getPhoneById(userId);
+    }
 }
